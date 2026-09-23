@@ -70,6 +70,10 @@ pytest                    # w trybie headless
 pytest tests/test_login.py -v
 ```
 
+Uruchomienie lokalne (z aktywnym `.venv` i uzupełnionym `.env`) **nie zużywa minut GitHub Actions** —
+limit dotyczy wyłącznie przebiegów wykonywanych na serwerach GitHuba (cron, push, `workflow_dispatch`).
+Z `NOTIFY_NTFY_ENABLED=true` w `.env` lokalny `pytest` wysyła to samo powiadomienie co CI.
+
 ## CI
 
 Workflow GitHub Actions (`.github/workflows/playwright.yml`) uruchamia testy przy każdym pushu/PR
