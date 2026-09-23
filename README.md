@@ -70,6 +70,10 @@ pytest tests/test_login.py -v
 ## CI
 
 Workflow GitHub Actions (`.github/workflows/playwright.yml`) uruchamia testy przy każdym pushu/PR
-oraz co godzinę (`cron: "0 * * * *"`). Dane logowania należy dodać jako sekrety repozytorium:
+oraz co 2 godziny (`cron: "0 */2 * * *"`). Dane logowania należy dodać jako sekrety repozytorium:
 `SEART_LOGIN_EMAIL`, `SEART_LOGIN_PASSWORD`, `RUSTYKALNEUCHWYTY_LOGIN_EMAIL`,
 `RUSTYKALNEUCHWYTY_LOGIN_PASSWORD`, `SEART_CZ_LOGIN_EMAIL`, `SEART_CZ_LOGIN_PASSWORD`.
+
+Przy testach 3 sklepów pojedynczy przebieg trwa ~100–120 s (2 min rozliczeniowe). Przy 12
+uruchomieniach/dobę (co 2h) to ~360 runów/miesiąc × 2 min ≈ 720 min/miesiąc — bezpieczny zapas
+wobec darmowego limitu 2000 min/miesiąc dla prywatnego repo.
