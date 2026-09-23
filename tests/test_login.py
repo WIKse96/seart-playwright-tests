@@ -13,4 +13,4 @@ def test_customer_login(page: Page, site, accept_cookies):
     page.get_by_role("button", name=site.login_button_name).click()
 
     expect(page).to_have_url(re.compile(r"/customer/account"))
-    expect(page).to_have_title(site.account_page_title, timeout=10000)
+    expect(page).to_have_title(site.account_page_title + " SIMULATED-FAILURE", timeout=10000)
