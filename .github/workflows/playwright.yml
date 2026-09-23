@@ -60,3 +60,7 @@ jobs:
           name: test-results
           path: test-results/
           retention-days: 7
+
+      - name: Ping healthchecks.io (dead man's switch)
+        if: always()
+        run: curl -fsS --retry 3 "${{ secrets.HEALTHCHECKS_PING_URL }}" > /dev/null || true

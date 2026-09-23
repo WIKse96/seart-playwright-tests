@@ -87,6 +87,15 @@ oraz co 2 godziny (`cron: "0 */2 * * *"`). Dane logowania należy dodać jako se
 `SEART_LOGIN_EMAIL`, `SEART_LOGIN_PASSWORD`, `RUSTYKALNEUCHWYTY_LOGIN_EMAIL`,
 `RUSTYKALNEUCHWYTY_LOGIN_PASSWORD`, `SEART_CZ_LOGIN_EMAIL`, `SEART_CZ_LOGIN_PASSWORD`.
 
+### Dead man's switch (healthchecks.io)
+
+Ostatni krok workflow pinguje `HEALTHCHECKS_PING_URL` (sekret repozytorium) przy każdym
+uruchomieniu, niezależnie od wyniku testów. To osobny, zewnętrzny sygnał "monitoring żyje" —
+jeśli GitHub Actions z jakiegoś powodu przestanie odpalać harmonogram (np. automatyczne
+wyłączenie crona po 60 dniach bez commitów w repo), ntfy/email z wynikami testów też przestaną
+przychodzić, ale nic Cię o tym nie ostrzeże. healthchecks.io wykrywa brak pingu (skonfigurowany
+grace period) i wysyła osobny alert mailem, niezależnie od GitHuba.
+
 Przy testach 3 sklepów pojedynczy przebieg trwa ~100–120 s (2 min rozliczeniowe). Przy 12
 uruchomieniach/dobę (co 2h) to ~360 runów/miesiąc × 2 min ≈ 720 min/miesiąc — bezpieczny zapas
 wobec darmowego limitu 2000 min/miesiąc dla prywatnego repo.
