@@ -5,6 +5,7 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class Site:
     id: str
+    label: str
     product_url: str
     login_url: str
     product_name: str
@@ -32,6 +33,7 @@ class Site:
 SITES = [
     Site(
         id="seart_pl",
+        label="seart.pl",
         product_url=os.environ.get(
             "SEART_PL_PRODUCT_URL",
             "https://www.seart.pl/drewniana-komoda-sosnowa-rustyk-3-9.html",
@@ -49,6 +51,7 @@ SITES = [
     ),
     Site(
         id="rustykalneuchwyty_pl",
+        label="rustykalneuchwyty.pl",
         product_url=os.environ.get(
             "RUSTYKALNEUCHWYTY_PRODUCT_URL",
             "https://rustykalneuchwyty.pl/zawias-meblowy-country.html",
@@ -66,6 +69,7 @@ SITES = [
     ),
     Site(
         id="seart_cz",
+        label="seart.cz",
         product_url=os.environ.get(
             "SEART_CZ_PRODUCT_URL",
             "https://www.seart.cz/nabytkova-knopka-rustyk-30-mm-s-dekorativni-destickou.html",

@@ -21,16 +21,17 @@ def page_load_threshold_ms() -> int:
 
 
 @pytest.fixture(autouse=True)
-def fail_on_http_error(page):
+def fail_on_http_error(page, site):
     errors = []
 
     def _check(response):
         if response.status >= 400 and response.request.resource_type == "document":
-            errors.append(f"{response.status} {response.url}")
+            errors.append(str(response.status))
 
     page.on("response", _check)
     yield
-    assert not errors, "Strona zwrocila blad HTTP: " + "; ".join(errors)
+    if errors:
+        pytest.fail(f"{site.label} - strona zwrocila blad HTTP {', '.join(errors)}")
 
 
 @pytest.fixture
@@ -73,8 +74,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
 
     lines = [f"Wynik: {passed} passed, {len(failed)} failed, {len(errors)} error (z {total})", ""]
     for report in [*failed, *errors]:
-        lines.append(f"- {report.nodeid}")
-        lines.append(f"  {_failure_reason(report)}")
+        lines.append(f"- {_failure_reason(report)}")
     body = "\n".join(lines)
 
     if email_enabled:
