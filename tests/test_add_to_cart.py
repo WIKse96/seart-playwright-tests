@@ -2,7 +2,7 @@ from playwright.sync_api import Page, expect
 
 
 def test_add_product_to_cart(page: Page, site, accept_cookies):
-    page.goto(site.product_url)
+    page.goto(site.product_url, wait_until="networkidle")
     accept_cookies()
 
     page.locator("button.btn-cart").first.click()
