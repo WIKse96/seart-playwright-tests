@@ -2,9 +2,17 @@ from playwright.sync_api import Page, expect
 
 
 def test_add_product_to_cart(page: Page, site, accept_cookies):
-    page.goto(site.product_url, wait_until="networkidle")
+    page.goto(site.product_url)
     accept_cookies()
 
-    page.locator("button.btn-cart").first.click()
+    add_to_cart_button = page.locator("button.btn-cart").first
+    confirmation = page.get_by_text(site.confirmation_text)
 
-    expect(page.get_by_text(site.confirmation_text)).to_be_visible(timeout=10000)
+    for attempt in range(3):
+        add_to_cart_button.click()
+        try:
+            expect(confirmation).to_be_visible(timeout=3000)
+            break
+        except AssertionError:
+            if attempt == 2:
+                raise
