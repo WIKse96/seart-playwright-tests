@@ -26,6 +26,12 @@ jobs:
         env:
           SEART_LOGIN_EMAIL: ${{ secrets.SEART_LOGIN_EMAIL }}
           SEART_LOGIN_PASSWORD: ${{ secrets.SEART_LOGIN_PASSWORD }}
+          NOTIFY_EMAIL_ENABLED: ${{ secrets.NOTIFY_EMAIL_ENABLED }}
+          NOTIFY_EMAIL_FROM: ${{ secrets.NOTIFY_EMAIL_FROM }}
+          NOTIFY_EMAIL_APP_PASSWORD: ${{ secrets.NOTIFY_EMAIL_APP_PASSWORD }}
+          NOTIFY_EMAIL_TO: ${{ secrets.NOTIFY_EMAIL_TO }}
+          NOTIFY_NTFY_ENABLED: ${{ secrets.NOTIFY_NTFY_ENABLED }}
+          NOTIFY_NTFY_TOPIC: ${{ secrets.NOTIFY_NTFY_TOPIC }}
         run: pytest --tracing=retain-on-failure
 
       - uses: actions/upload-artifact@v4
