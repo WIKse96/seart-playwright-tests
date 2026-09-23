@@ -1,9 +1,15 @@
-# seart.pl – testy Playwright + pytest
+# Testy Playwright + pytest – seart.pl / rustykalneuchwyty.pl / seart.cz
 
-Automatyczne testy sklepu [seart.pl](https://www.seart.pl):
+Automatyczne testy trzech sklepów grupy Seart, zdefiniowanych w [sites.py](sites.py):
+
+- **seart.pl** – Komoda drewniana Rustyk 3/9
+- **rustykalneuchwyty.pl** – Zawias meblowy COUNTRY
+- **seart.cz** – Nábytková knopka Rustyk 30 mm s dekorativní destičkou
+
+Każdy z trzech testów jest sparametryzowany i uruchamia się osobno dla każdego sklepu (`test_xxx[seart_pl]`, `test_xxx[rustykalneuchwyty_pl]`, `test_xxx[seart_cz]`):
 
 - `tests/test_page_load.py` – mierzy czas ładowania strony produktu i sprawdza, czy mieści się w zadanym limicie.
-- `tests/test_add_to_cart.py` – dodaje produkt "Komoda drewniana Rustyk 3/9" do koszyka i weryfikuje aktualizację koszyka.
+- `tests/test_add_to_cart.py` – dodaje produkt do koszyka i weryfikuje komunikat potwierdzający.
 - `tests/test_login.py` – loguje się na konto testowe.
 
 ## Instalacja
@@ -25,10 +31,13 @@ cp .env.example .env
 
 | Zmienna | Opis | Domyślnie |
 |---|---|---|
-| `SEART_LOGIN_EMAIL` | login do konta testowego | – (wymagane) |
-| `SEART_LOGIN_PASSWORD` | hasło do konta testowego | – (wymagane) |
-| `SEART_PRODUCT_URL` | URL testowanego produktu | komoda Rustyk 3/9 |
-| `PAGE_LOAD_THRESHOLD_MS` | limit czasu ładowania strony w ms (lokalnie zmierzony czas `load`: 4,1–5,5 s; na runnerach GitHub Actions bywa wolniej, stąd wyższy margines) | 11000 |
+| `SEART_LOGIN_EMAIL` / `SEART_LOGIN_PASSWORD` | login do konta testowego na seart.pl | – (wymagane) |
+| `SEART_PL_PRODUCT_URL` | URL testowanego produktu na seart.pl | komoda Rustyk 3/9 |
+| `RUSTYKALNEUCHWYTY_LOGIN_EMAIL` / `RUSTYKALNEUCHWYTY_LOGIN_PASSWORD` | login do konta testowego na rustykalneuchwyty.pl | – (wymagane) |
+| `RUSTYKALNEUCHWYTY_PRODUCT_URL` | URL testowanego produktu na rustykalneuchwyty.pl | zawias COUNTRY |
+| `SEART_CZ_LOGIN_EMAIL` / `SEART_CZ_LOGIN_PASSWORD` | login do konta testowego na seart.cz | – (wymagane) |
+| `SEART_CZ_PRODUCT_URL` | URL testowanego produktu na seart.cz | knopka Rustyk 30 mm |
+| `PAGE_LOAD_THRESHOLD_MS` | wspólny limit czasu ładowania strony w ms dla wszystkich sklepów (lokalnie zmierzone czasy `load`: seart.pl 4,1–5,5 s, rustykalneuchwyty.pl i seart.cz 2,4–3,2 s; na runnerach GitHub Actions bywa wolniej, stąd wyższy margines) | 11000 |
 | `NOTIFY_EMAIL_ENABLED` | `true`, żeby po każdym uruchomieniu testów wysłać email z podsumowaniem wyniku | `false` |
 | `NOTIFY_EMAIL_FROM` | adres Gmail, z którego wysyłane jest powiadomienie | – |
 | `NOTIFY_EMAIL_APP_PASSWORD` | [Gmail App Password](https://myaccount.google.com/apppasswords) konta z `NOTIFY_EMAIL_FROM` (nie zwykłe hasło) | – |
@@ -60,5 +69,7 @@ pytest tests/test_login.py -v
 
 ## CI
 
-Workflow GitHub Actions (`.github/workflows/playwright.yml`) uruchamia testy przy każdym pushu/PR.
-Dane logowania należy dodać jako sekrety repozytorium: `SEART_LOGIN_EMAIL`, `SEART_LOGIN_PASSWORD`.
+Workflow GitHub Actions (`.github/workflows/playwright.yml`) uruchamia testy przy każdym pushu/PR
+oraz co godzinę (`cron: "0 * * * *"`). Dane logowania należy dodać jako sekrety repozytorium:
+`SEART_LOGIN_EMAIL`, `SEART_LOGIN_PASSWORD`, `RUSTYKALNEUCHWYTY_LOGIN_EMAIL`,
+`RUSTYKALNEUCHWYTY_LOGIN_PASSWORD`, `SEART_CZ_LOGIN_EMAIL`, `SEART_CZ_LOGIN_PASSWORD`.
