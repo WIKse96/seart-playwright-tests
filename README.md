@@ -12,6 +12,9 @@ Każdy z trzech testów jest sparametryzowany i uruchamia się osobno dla każde
 - `tests/test_add_to_cart.py` – dodaje produkt do koszyka i weryfikuje komunikat potwierdzający.
 - `tests/test_login.py` – loguje się na konto testowe.
 
+Dodatkowo każdy test (`conftest.py: fail_on_http_error`) automatycznie sprawdza, czy główny
+dokument strony nie zwrócił błędu HTTP 4xx/5xx podczas wykonywanej akcji.
+
 ## Instalacja
 
 ```bash

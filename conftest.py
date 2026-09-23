@@ -20,6 +20,19 @@ def page_load_threshold_ms() -> int:
     return int(os.environ.get("PAGE_LOAD_THRESHOLD_MS", "11000"))
 
 
+@pytest.fixture(autouse=True)
+def fail_on_http_error(page):
+    errors = []
+
+    def _check(response):
+        if response.status >= 400 and response.request.resource_type == "document":
+            errors.append(f"{response.status} {response.url}")
+
+    page.on("response", _check)
+    yield
+    assert not errors, "Strona zwrocila blad HTTP: " + "; ".join(errors)
+
+
 @pytest.fixture
 def accept_cookies(page, site):
     def _accept():
