@@ -9,7 +9,6 @@ class Site:
     login_url: str
     product_name: str
     confirmation_template: str
-    add_to_cart_button: str
     email_field_name: str
     password_field_name: str
     login_button_name: str
@@ -40,7 +39,6 @@ SITES = [
         login_url="https://www.seart.pl/customer/account/login/",
         product_name="Komoda drewniana Rustyk 3/9",
         confirmation_template="{name} został dodany do Twojego koszyka.",
-        add_to_cart_button="Do koszyka",
         email_field_name="Adres e-mail",
         password_field_name="Hasło",
         login_button_name="Logowanie",
@@ -58,7 +56,6 @@ SITES = [
         login_url="https://rustykalneuchwyty.pl/customer/account/login/",
         product_name="Zawias meblowy COUNTRY",
         confirmation_template="{name} został dodany do Twojego koszyka.",
-        add_to_cart_button="Do koszyka",
         email_field_name="Adres e-mail",
         password_field_name="Hasło",
         login_button_name="Logowanie",
@@ -76,7 +73,6 @@ SITES = [
         login_url="https://www.seart.cz/customer/account/login/",
         product_name="Nábytková knopka Rustyk 30 mm s dekorativní destičkou",
         confirmation_template="{name} byl úspěšně přidán do košíku.",
-        add_to_cart_button="Přidat do košíku",
         email_field_name="Emailová adresa",
         password_field_name="Heslo",
         login_button_name="Přihlášení",
