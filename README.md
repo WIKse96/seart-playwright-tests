@@ -36,11 +36,17 @@ cp .env.example .env
 |---|---|---|
 | `SEART_LOGIN_EMAIL` / `SEART_LOGIN_PASSWORD` | login do konta testowego na seart.pl | – (wymagane) |
 | `SEART_PL_PRODUCT_URL` | URL testowanego produktu na seart.pl | komoda Rustyk 3/9 |
+| `SEART_PL_LOAD_THRESHOLD_MS` | limit czasu ładowania seart.pl w ms | 7600 |
 | `RUSTYKALNEUCHWYTY_LOGIN_EMAIL` / `RUSTYKALNEUCHWYTY_LOGIN_PASSWORD` | login do konta testowego na rustykalneuchwyty.pl | – (wymagane) |
 | `RUSTYKALNEUCHWYTY_PRODUCT_URL` | URL testowanego produktu na rustykalneuchwyty.pl | zawias COUNTRY |
+| `RUSTYKALNEUCHWYTY_LOAD_THRESHOLD_MS` | limit czasu ładowania rustykalneuchwyty.pl w ms | 5000 |
 | `SEART_CZ_LOGIN_EMAIL` / `SEART_CZ_LOGIN_PASSWORD` | login do konta testowego na seart.cz | – (wymagane) |
 | `SEART_CZ_PRODUCT_URL` | URL testowanego produktu na seart.cz | knopka Rustyk 30 mm |
-| `PAGE_LOAD_THRESHOLD_MS` | wspólny limit czasu ładowania strony w ms dla wszystkich sklepów (lokalnie zmierzone czasy `load`: seart.pl 4,1–5,5 s, rustykalneuchwyty.pl i seart.cz 2,4–3,2 s; na runnerach GitHub Actions bywa wolniej, stąd wyższy margines) | 11000 |
+| `SEART_CZ_LOAD_THRESHOLD_MS` | limit czasu ładowania seart.cz w ms | 4800 |
+
+Progi czasu ładowania: zmierzony lokalnie max z 5 przebiegów + ~50% marginesu (na wolniejsze
+przebiegi na runnerach GitHub Actions) — seart.pl 5079 ms → 7600 ms, rustykalneuchwyty.pl
+3306 ms → 5000 ms, seart.cz 3183 ms → 4800 ms.
 | `NOTIFY_EMAIL_ENABLED` | `true`, żeby po każdym uruchomieniu testów wysłać email z podsumowaniem wyniku | `false` |
 | `NOTIFY_EMAIL_FROM` | adres Gmail, z którego wysyłane jest powiadomienie | – |
 | `NOTIFY_EMAIL_APP_PASSWORD` | [Gmail App Password](https://myaccount.google.com/apppasswords) konta z `NOTIFY_EMAIL_FROM` (nie zwykłe hasło) | – |

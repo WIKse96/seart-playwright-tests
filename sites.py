@@ -15,6 +15,7 @@ class Site:
     login_button_name: str
     cookie_reject_label: str
     account_page_title: str
+    load_threshold_ms: int
     email_env: str
     password_env: str
 
@@ -46,6 +47,7 @@ SITES = [
         login_button_name="Logowanie",
         cookie_reject_label="Odrzuć",
         account_page_title="Moje konto",
+        load_threshold_ms=int(os.environ.get("SEART_PL_LOAD_THRESHOLD_MS", "7600")),
         email_env="SEART_LOGIN_EMAIL",
         password_env="SEART_LOGIN_PASSWORD",
     ),
@@ -64,6 +66,7 @@ SITES = [
         login_button_name="Logowanie",
         cookie_reject_label="Odrzuć",
         account_page_title="Moje konto",
+        load_threshold_ms=int(os.environ.get("RUSTYKALNEUCHWYTY_LOAD_THRESHOLD_MS", "5000")),
         email_env="RUSTYKALNEUCHWYTY_LOGIN_EMAIL",
         password_env="RUSTYKALNEUCHWYTY_LOGIN_PASSWORD",
     ),
@@ -82,6 +85,7 @@ SITES = [
         login_button_name="Přihlášení",
         cookie_reject_label="Odmítnout",
         account_page_title="Můj účet",
+        load_threshold_ms=int(os.environ.get("SEART_CZ_LOAD_THRESHOLD_MS", "4800")),
         email_env="SEART_CZ_LOGIN_EMAIL",
         password_env="SEART_CZ_LOGIN_PASSWORD",
     ),

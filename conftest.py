@@ -15,11 +15,6 @@ def site(request):
     return request.param
 
 
-@pytest.fixture(scope="session")
-def page_load_threshold_ms() -> int:
-    return int(os.environ.get("PAGE_LOAD_THRESHOLD_MS", "11000"))
-
-
 @pytest.fixture(autouse=True)
 def fail_on_http_error(page, site):
     errors = []

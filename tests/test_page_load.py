@@ -2,7 +2,7 @@ import pytest
 from playwright.sync_api import Page
 
 
-def test_product_page_load_time(page: Page, site, page_load_threshold_ms: int):
+def test_product_page_load_time(page: Page, site):
     page.goto(site.product_url, wait_until="load")
 
     timing = page.evaluate(
@@ -18,7 +18,7 @@ def test_product_page_load_time(page: Page, site, page_load_threshold_ms: int):
 
     if load_time_ms <= 0:
         pytest.fail(f"{site.label} - nie udalo sie zmierzyc czasu ladowania strony")
-    if load_time_ms >= page_load_threshold_ms:
+    if load_time_ms >= site.load_threshold_ms:
         pytest.fail(
-            f"{site.label} - czas ladowania {load_time_ms:.0f} ms zamiast limitu {page_load_threshold_ms} ms"
+            f"{site.label} - czas ladowania {load_time_ms:.0f} ms zamiast limitu {site.load_threshold_ms} ms"
         )
