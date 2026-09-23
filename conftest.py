@@ -45,6 +45,16 @@ def accept_cookies(page, site):
     return _accept
 
 
+def _failure_reason(report) -> str:
+    reprcrash = getattr(report.longrepr, "reprcrash", None)
+    message = reprcrash.message if reprcrash is not None else str(report.longrepr)
+    message = message.split("\nAria snapshot:")[0].strip()
+    max_len = 400
+    if len(message) > max_len:
+        message = message[:max_len].rstrip() + "..."
+    return message
+
+
 def pytest_terminal_summary(terminalreporter, exitstatus, config):
     email_enabled = os.environ.get("NOTIFY_EMAIL_ENABLED", "").lower() == "true"
     ntfy_enabled = os.environ.get("NOTIFY_NTFY_ENABLED", "").lower() == "true"
@@ -64,6 +74,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
     lines = [f"Wynik: {passed} passed, {len(failed)} failed, {len(errors)} error (z {total})", ""]
     for report in [*failed, *errors]:
         lines.append(f"- {report.nodeid}")
+        lines.append(f"  {_failure_reason(report)}")
     body = "\n".join(lines)
 
     if email_enabled:
