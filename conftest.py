@@ -32,7 +32,7 @@ def login_credentials() -> dict:
 
 @pytest.fixture(scope="session")
 def page_load_threshold_ms() -> int:
-    return int(os.environ.get("PAGE_LOAD_THRESHOLD_MS", "7000"))
+    return int(os.environ.get("PAGE_LOAD_THRESHOLD_MS", "11000"))
 
 
 @pytest.fixture

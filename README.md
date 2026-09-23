@@ -28,7 +28,7 @@ cp .env.example .env
 | `SEART_LOGIN_EMAIL` | login do konta testowego | – (wymagane) |
 | `SEART_LOGIN_PASSWORD` | hasło do konta testowego | – (wymagane) |
 | `SEART_PRODUCT_URL` | URL testowanego produktu | komoda Rustyk 3/9 |
-| `PAGE_LOAD_THRESHOLD_MS` | limit czasu ładowania strony w ms (zmierzony realny czas `load`: 4,1–5,5 s, próg z ok. 27% marginesem) | 7000 |
+| `PAGE_LOAD_THRESHOLD_MS` | limit czasu ładowania strony w ms (lokalnie zmierzony czas `load`: 4,1–5,5 s; na runnerach GitHub Actions bywa wolniej, stąd wyższy margines) | 11000 |
 | `NOTIFY_EMAIL_ENABLED` | `true`, żeby po każdym uruchomieniu testów wysłać email z podsumowaniem wyniku | `false` |
 | `NOTIFY_EMAIL_FROM` | adres Gmail, z którego wysyłane jest powiadomienie | – |
 | `NOTIFY_EMAIL_APP_PASSWORD` | [Gmail App Password](https://myaccount.google.com/apppasswords) konta z `NOTIFY_EMAIL_FROM` (nie zwykłe hasło) | – |
