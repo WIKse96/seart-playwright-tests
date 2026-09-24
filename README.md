@@ -83,26 +83,50 @@ Z `NOTIFY_NTFY_ENABLED=true` w `.env` lokalny `pytest` wysyła to samo powiadomi
 ## CI
 
 Workflow GitHub Actions (`.github/workflows/playwright.yml`) uruchamia testy przy każdym pushu/PR
-oraz co 2 godziny (`cron: "17 */2 * * *"`). Dane logowania należy dodać jako sekrety repozytorium:
-`SEART_LOGIN_EMAIL`, `SEART_LOGIN_PASSWORD`, `RUSTYKALNEUCHWYTY_LOGIN_EMAIL`,
-`RUSTYKALNEUCHWYTY_LOGIN_PASSWORD`, `SEART_CZ_LOGIN_EMAIL`, `SEART_CZ_LOGIN_PASSWORD`.
+oraz na żądanie (`workflow_dispatch`) — patrz sekcja niżej o zewnętrznym harmonogramie. Dane
+logowania należy dodać jako sekrety repozytorium: `SEART_LOGIN_EMAIL`, `SEART_LOGIN_PASSWORD`,
+`RUSTYKALNEUCHWYTY_LOGIN_EMAIL`, `RUSTYKALNEUCHWYTY_LOGIN_PASSWORD`, `SEART_CZ_LOGIN_EMAIL`,
+`SEART_CZ_LOGIN_PASSWORD`.
 
-**Uwaga:** harmonogram (`schedule`) w GitHub Actions jest "best-effort" — GitHub nie gwarantuje
-uruchomienia co do minuty, a uruchomienia zaplanowane dokładnie na pełną godzinę bywają opóźniane
-lub całkiem pomijane (obserwowane realnie: przerwa 4,5h zamiast 2h). Dlatego cron jest ustawiony
-na `:17`, nie `:00` — omija najbardziej zatłoczony moment. Mimo to sporadyczne opóźnienia
-rzędu 1h+ są normalne i nie oznaczają awarii.
+**Dlaczego nie `schedule:`?** GitHub Actions ma wbudowany harmonogram cron, ale w praktyce jest on
+zawodny na repo z małym ruchem — GitHub sam nie gwarantuje wykonania co do minuty. W testach na
+tym repo (`cron: "0 */2 * * *"`, potem `"17 */2 * * *"`) GitHub pomijał 3 z 4 zaplanowanych
+uruchomień z rzędu, mimo poprawnej konfiguracji. To udokumentowane ograniczenie GitHuba, nie błąd
+w tym kodzie. Dlatego harmonogram jest realizowany **z zewnątrz** (patrz niżej).
+
+### Zewnętrzny harmonogram (cron-job.org → workflow_dispatch)
+
+Zamiast wbudowanego `schedule:`, darmowy zewnętrzny serwis cron (np. [cron-job.org](https://cron-job.org))
+co 2 godziny woła GitHub REST API, żeby odpalić workflow ręcznie (`workflow_dispatch`) — to
+wykonanie faktycznie jest natychmiastowe (bez kolejkowania jak przy `schedule:`).
+
+Konfiguracja (jednorazowa, po stronie użytkownika):
+
+1. Utwórz **fine-grained Personal Access Token**: https://github.com/settings/personal-access-tokens/new
+   - Repository access → Only select repositories → `seart-playwright-tests`
+   - Permissions → Actions → **Read and write**
+   - Expiration: dowolne (np. 1 rok)
+2. Załóż darmowe konto na https://cron-job.org
+3. Utwórz nowy cronjob:
+   - **URL:** `https://api.github.com/repos/WIKse96/seart-playwright-tests/actions/workflows/playwright.yml/dispatches`
+   - **Method:** `POST`
+   - **Headers:**
+     - `Authorization: Bearer <TWÓJ_PAT>`
+     - `Accept: application/vnd.github+json`
+     - `Content-Type: application/json`
+   - **Body:** `{"ref":"master"}`
+   - **Schedule:** co 2 godziny
+4. Token wklej bezpośrednio w formularzu cron-job.org — nie udostępniaj go nigdzie indziej.
 
 ### Dead man's switch (healthchecks.io)
 
 Ostatni krok workflow pinguje `HEALTHCHECKS_PING_URL` (sekret repozytorium) przy każdym
 uruchomieniu, niezależnie od wyniku testów. To osobny, zewnętrzny sygnał "monitoring żyje" —
-jeśli GitHub Actions z jakiegoś powodu przestanie odpalać harmonogram (np. automatyczne
-wyłączenie crona po 60 dniach bez commitów w repo), ntfy/email z wynikami testów też przestaną
-przychodzić, ale nic Cię o tym nie ostrzeże. healthchecks.io wykrywa brak pingu i wysyła osobny
-alert mailem, niezależnie od GitHuba. Ze względu na opisaną wyżej niedokładność harmonogramu
-GitHub, grace period na healthchecks.io powinien być ustawiony szeroko (np. 90 minut), żeby
-zwykłe opóźnienie GitHuba nie generowało fałszywych alarmów.
+jeśli zewnętrzny cron-job.org przestanie wołać GitHub (np. wygasł token, konto zablokowane),
+ntfy/email z wynikami testów też przestaną przychodzić, ale nic Cię o tym nie ostrzeże.
+healthchecks.io wykrywa brak pingu i wysyła osobny alert mailem. Skoro wyzwalanie jest teraz przez
+`workflow_dispatch` (natychmiastowe, bez kolejkowania GitHuba), grace period na healthchecks.io
+można bezpiecznie zmniejszyć z powrotem do ok. 30–45 minut.
 
 Przy testach 3 sklepów pojedynczy przebieg trwa ~100–120 s (2 min rozliczeniowe). Przy 12
 uruchomieniach/dobę (co 2h) to ~360 runów/miesiąc × 2 min ≈ 720 min/miesiąc — bezpieczny zapas
