@@ -83,9 +83,15 @@ Z `NOTIFY_NTFY_ENABLED=true` w `.env` lokalny `pytest` wysyła to samo powiadomi
 ## CI
 
 Workflow GitHub Actions (`.github/workflows/playwright.yml`) uruchamia testy przy każdym pushu/PR
-oraz co 2 godziny (`cron: "0 */2 * * *"`). Dane logowania należy dodać jako sekrety repozytorium:
+oraz co 2 godziny (`cron: "17 */2 * * *"`). Dane logowania należy dodać jako sekrety repozytorium:
 `SEART_LOGIN_EMAIL`, `SEART_LOGIN_PASSWORD`, `RUSTYKALNEUCHWYTY_LOGIN_EMAIL`,
 `RUSTYKALNEUCHWYTY_LOGIN_PASSWORD`, `SEART_CZ_LOGIN_EMAIL`, `SEART_CZ_LOGIN_PASSWORD`.
+
+**Uwaga:** harmonogram (`schedule`) w GitHub Actions jest "best-effort" — GitHub nie gwarantuje
+uruchomienia co do minuty, a uruchomienia zaplanowane dokładnie na pełną godzinę bywają opóźniane
+lub całkiem pomijane (obserwowane realnie: przerwa 4,5h zamiast 2h). Dlatego cron jest ustawiony
+na `:17`, nie `:00` — omija najbardziej zatłoczony moment. Mimo to sporadyczne opóźnienia
+rzędu 1h+ są normalne i nie oznaczają awarii.
 
 ### Dead man's switch (healthchecks.io)
 
@@ -93,8 +99,10 @@ Ostatni krok workflow pinguje `HEALTHCHECKS_PING_URL` (sekret repozytorium) przy
 uruchomieniu, niezależnie od wyniku testów. To osobny, zewnętrzny sygnał "monitoring żyje" —
 jeśli GitHub Actions z jakiegoś powodu przestanie odpalać harmonogram (np. automatyczne
 wyłączenie crona po 60 dniach bez commitów w repo), ntfy/email z wynikami testów też przestaną
-przychodzić, ale nic Cię o tym nie ostrzeże. healthchecks.io wykrywa brak pingu (skonfigurowany
-grace period) i wysyła osobny alert mailem, niezależnie od GitHuba.
+przychodzić, ale nic Cię o tym nie ostrzeże. healthchecks.io wykrywa brak pingu i wysyła osobny
+alert mailem, niezależnie od GitHuba. Ze względu na opisaną wyżej niedokładność harmonogramu
+GitHub, grace period na healthchecks.io powinien być ustawiony szeroko (np. 90 minut), żeby
+zwykłe opóźnienie GitHuba nie generowało fałszywych alarmów.
 
 Przy testach 3 sklepów pojedynczy przebieg trwa ~100–120 s (2 min rozliczeniowe). Przy 12
 uruchomieniach/dobę (co 2h) to ~360 runów/miesiąc × 2 min ≈ 720 min/miesiąc — bezpieczny zapas
