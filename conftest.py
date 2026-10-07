@@ -2,8 +2,9 @@ import csv
 import os
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import pytest
 from dotenv import load_dotenv
@@ -73,12 +74,13 @@ def _record_results_history(failed, errors) -> None:
             site_failures[site_id] += 1
 
     is_new = not RESULTS_HISTORY_PATH.exists()
+    now_warsaw = datetime.now(ZoneInfo("Europe/Warsaw"))
     with RESULTS_HISTORY_PATH.open("a", newline="") as f:
         writer = csv.writer(f)
         if is_new:
-            writer.writerow(["timestamp_utc", *(s.id for s in SITES)])
+            writer.writerow(["data_i_godzina", *(s.id for s in SITES)])
         writer.writerow([
-            datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            now_warsaw.strftime("%d.%m.%Y %H:%M:%S"),
             *(site_failures[s.id] for s in SITES),
         ])
 
