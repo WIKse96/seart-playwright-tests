@@ -15,6 +15,13 @@ Każdy z trzech testów jest sparametryzowany i uruchamia się osobno dla każde
 Dodatkowo każdy test (`conftest.py: fail_on_http_error`) automatycznie sprawdza, czy główny
 dokument strony nie zwrócił błędu HTTP 4xx/5xx podczas wykonywanej akcji.
 
+### Historia wyników
+
+[results_history.csv](results_history.csv) zawiera jeden wiersz na każdy przebieg testów w CI
+(liczbę nieudanych testów osobno dla każdego sklepu, 0 gdy wszystko OK). Plik jest dopisywany i
+commitowany automatycznie przez workflow (krok "Record results history") — lokalne uruchomienia
+`pytest` go nie modyfikują.
+
 ## Instalacja
 
 ```bash
