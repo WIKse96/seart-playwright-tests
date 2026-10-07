@@ -115,7 +115,7 @@ Konfiguracja (jednorazowa, po stronie użytkownika):
      - `Accept: application/vnd.github+json`
      - `Content-Type: application/json`
    - **Body:** `{"ref":"master"}`
-   - **Schedule:** co 2 godziny
+   - **Harmonogram:** co 2 godziny (crontab: `0 */2 * * *`)
 4. Token wklej bezpośrednio w formularzu cron-job.org — nie udostępniaj go nigdzie indziej.
 
 ### Dead man's switch (healthchecks.io)
