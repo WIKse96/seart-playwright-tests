@@ -2,6 +2,7 @@ import csv
 import os
 import re
 import sys
+import time
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -20,6 +21,12 @@ RESULTS_HISTORY_PATH = Path(__file__).parent / "results_history.csv"
 @pytest.fixture(params=SITES, ids=[s.id for s in SITES])
 def site(request):
     return request.param
+
+
+@pytest.fixture(autouse=True)
+def _pace_between_tests():
+    yield
+    time.sleep(3)
 
 
 @pytest.fixture(autouse=True)
