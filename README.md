@@ -17,11 +17,12 @@ dokument strony nie zwrócił błędu HTTP 4xx/5xx podczas wykonywanej akcji.
 
 ### Historia wyników
 
-[results_history.csv](results_history.csv) zawiera jeden wiersz na każdy przebieg testów w CI
-(liczbę nieudanych testów osobno dla każdego sklepu, 0 gdy wszystko OK, oraz publiczny adres IP
-runnera GitHuba z tego przebiegu). Plik jest dopisywany i commitowany automatycznie przez workflow
-(krok "Record results history") — lokalne uruchomienia `pytest` go nie modyfikują. Wiersze sprzed
-dodania kolumny `ip_runnera` jej nie zawierają.
+[results_history.csv](results_history.csv) zawiera jeden wiersz na każdy przebieg testów w CI:
+liczbę nieudanych testów osobno dla każdego sklepu (0 gdy wszystko OK), publiczny adres IP runnera
+GitHuba z tego przebiegu (`ip_runnera`) oraz krótki opis błędów (`opis_bledow`) — te same komunikaty,
+które lecą w powiadomieniu ntfy/email, połączone znakiem ` | ` jeśli padło kilka testów. Plik jest
+dopisywany i commitowany automatycznie przez workflow (krok "Record results history") — lokalne
+uruchomienia `pytest` go nie modyfikują.
 
 ## Instalacja
 

@@ -89,16 +89,19 @@ def _record_results_history(failed, errors) -> None:
         if site_id in site_failures:
             site_failures[site_id] += 1
 
+    failure_reasons = " | ".join(_failure_reason(report) for report in [*failed, *errors])
+
     is_new = not RESULTS_HISTORY_PATH.exists()
     now_warsaw = datetime.now(ZoneInfo("Europe/Warsaw"))
     with RESULTS_HISTORY_PATH.open("a", newline="") as f:
         writer = csv.writer(f)
         if is_new:
-            writer.writerow(["data_i_godzina", *(s.id for s in SITES), "ip_runnera"])
+            writer.writerow(["data_i_godzina", *(s.id for s in SITES), "ip_runnera", "opis_bledow"])
         writer.writerow([
             now_warsaw.strftime("%d.%m.%Y %H:%M:%S"),
             *(site_failures[s.id] for s in SITES),
             _get_public_ip(),
+            failure_reasons,
         ])
 
 
