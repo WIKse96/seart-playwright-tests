@@ -3,6 +3,7 @@ import os
 import re
 import sys
 import time
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -70,6 +71,14 @@ def _site_id_from_nodeid(nodeid: str) -> str | None:
     return match.group(1) if match else None
 
 
+def _get_public_ip() -> str:
+    try:
+        with urllib.request.urlopen("https://api.ipify.org", timeout=5) as resp:
+            return resp.read().decode().strip()
+    except Exception:
+        return "unknown"
+
+
 def _record_results_history(failed, errors) -> None:
     if os.environ.get("GITHUB_ACTIONS") != "true":
         return
@@ -85,10 +94,11 @@ def _record_results_history(failed, errors) -> None:
     with RESULTS_HISTORY_PATH.open("a", newline="") as f:
         writer = csv.writer(f)
         if is_new:
-            writer.writerow(["data_i_godzina", *(s.id for s in SITES)])
+            writer.writerow(["data_i_godzina", *(s.id for s in SITES), "ip_runnera"])
         writer.writerow([
             now_warsaw.strftime("%d.%m.%Y %H:%M:%S"),
             *(site_failures[s.id] for s in SITES),
+            _get_public_ip(),
         ])
 
 
