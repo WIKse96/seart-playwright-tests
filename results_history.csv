@@ -6,3 +6,4 @@ data_i_godzina,seart_pl,rustykalneuchwyty_pl,seart_cz,ip_runnera,opis_bledow
 13.10.2026 20:19:32,0,0,2,4.242.197.21,Failed: seart.cz - nie pojawil sie komunikat potwierdzenia dodania do koszyka | Failed: seart.cz - czas ladowania 5809 ms zamiast limitu 4800 ms
 13.10.2026 20:50:09,0,0,1,135.232.176.162,Failed: seart.cz - czas ladowania 6612 ms zamiast limitu 4800 ms
 13.10.2026 21:18:52,0,0,0,20.51.198.195,
+13.10.2026 21:50:09,1,0,0,172.208.13.52,Failed: seart.pl - czas ladowania 8591 ms zamiast limitu 7600 ms
