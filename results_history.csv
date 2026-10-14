@@ -702,3 +702,4 @@ data_i_godzina,seart_pl,rustykalneuchwyty_pl,seart_cz,ip_runnera,opis_bledow
 14.10.2026 19:50:13,0,0,1,52.159.247.231,Failed: seart.cz - czas ladowania 6076 ms zamiast limitu 4800 ms
 14.10.2026 20:19:13,0,0,0,52.154.140.85,
 14.10.2026 20:50:21,0,3,1,128.24.161.193,Failed: rustykalneuchwyty.pl - logowanie nie powiodlo sie (strona: '') | Failed: rustykalneuchwyty.pl - czas ladowania 5386 ms zamiast limitu 5000 ms | Failed: seart.cz - czas ladowania 6607 ms zamiast limitu 4800 ms | Failed: rustykalneuchwyty.pl - strona zwrocila blad HTTP 500
+14.10.2026 21:18:54,0,0,0,20.51.199.24,
