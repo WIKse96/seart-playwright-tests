@@ -772,3 +772,4 @@ data_i_godzina,seart_pl,rustykalneuchwyty_pl,seart_cz,ip_runnera,opis_bledow
 16.10.2026 06:49:59,0,0,0,172.172.205.216,
 16.10.2026 07:18:59,0,0,0,20.51.57.117,
 16.10.2026 07:50:19,0,0,0,20.171.2.107,
+16.10.2026 08:19:13,0,1,0,172.184.211.244,Failed: rustykalneuchwyty.pl - czas ladowania 5120 ms zamiast limitu 5000 ms
