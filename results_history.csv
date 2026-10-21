@@ -1033,3 +1033,4 @@ Call log:
 21.10.2026 16:19:30,2,0,0,172.212.164.21,"playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
 Call log:
   - waiting for get_by_role(""button"", name=""Logowanie"") | Failed: seart.pl - strona zwrocila blad HTTP 500"
+21.10.2026 16:50:03,0,0,0,20.127.239.242,
