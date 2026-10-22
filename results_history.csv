@@ -1073,3 +1073,4 @@ Call log:
 22.10.2026 11:19:00,0,0,0,20.29.31.213,
 22.10.2026 11:50:07,0,0,0,20.119.41.206,
 22.10.2026 12:18:57,0,0,0,20.127.214.163,
+22.10.2026 12:51:28,3,2,2,4.154.128.33,Failed: seart.pl - nie znaleziono formularza logowania | Failed: rustykalneuchwyty.pl - nie znaleziono formularza logowania | Failed: seart.cz - nie znaleziono formularza logowania | Failed: seart.pl - strona zwrocila blad HTTP 429 | Failed: rustykalneuchwyty.pl - strona zwrocila blad HTTP 429 | Failed: seart.cz - strona zwrocila blad HTTP 429 | Failed: seart.pl - strona zwrocila blad HTTP 429
