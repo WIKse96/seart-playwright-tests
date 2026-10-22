@@ -1079,3 +1079,4 @@ Call log:
 22.10.2026 14:23:39,0,0,0,20.171.3.33,
 22.10.2026 14:50:37,0,0,1,68.154.118.242,Failed: seart.cz - czas ladowania 5555 ms zamiast limitu 4800 ms
 22.10.2026 15:27:46,0,2,0,20.120.164.101,Failed: rustykalneuchwyty.pl - logowanie nie powiodlo sie (strona: '') | Failed: rustykalneuchwyty.pl - strona zwrocila blad HTTP 500
+22.10.2026 15:50:24,0,1,0,132.196.35.74,Failed: rustykalneuchwyty.pl - czas ladowania 5953 ms zamiast limitu 5000 ms
