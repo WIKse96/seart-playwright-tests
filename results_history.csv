@@ -1154,3 +1154,6 @@ Call log:
 24.10.2026 04:18:57,0,0,0,74.249.180.178,
 24.10.2026 04:50:13,0,0,0,20.3.167.83,
 24.10.2026 05:19:00,0,0,0,135.119.239.53,
+24.10.2026 05:50:52,0,2,0,52.234.1.99,"playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for get_by_role(""button"", name=""Logowanie"") | Failed: rustykalneuchwyty.pl - strona zwrocila blad HTTP 500"
